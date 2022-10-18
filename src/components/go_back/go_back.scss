@@ -1,0 +1,16 @@
+@use '../../pages/global';
+
+.go_back {
+  width: 64px;
+  height: 100%;
+  background-color: global.$light-grey;
+}
+
+.go_back__button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(-1, 1);
+}

@@ -1,0 +1,15 @@
+@use '../../../../pages/global';
+
+.message {
+  background-color: global.$light-grey;
+  padding: 11px;
+  width: fit-content;
+  align-self: flex-start;
+  border-radius: 0 15px 15px 15px;
+}
+
+.my-message {
+  @extend .message;
+  align-self: flex-end;
+  background-color: global.$light-blue;
+}

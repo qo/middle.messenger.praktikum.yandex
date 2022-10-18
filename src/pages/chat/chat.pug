@@ -1,0 +1,42 @@
+extends ../global
+include components/chat_preview/chat_preview
+include components/message/message
+
+block content
+    link(rel="stylesheet" href="chat.scss")
+    link(rel="stylesheet" href="components/chat_preview/chat_preview.scss")
+    link(rel="stylesheet" href="components/message/message.scss")
+    .chat
+        .chat__left
+            .chat__left__toolbar
+                .chat__left__toolbar__profile_link
+                    +link('Профиль ➜', 'dummy', 12, 500, 'dark-grey')
+                .chat__left__toolbar__searchbar
+                    +text('🔎︎ Поиск', 12, 500, 'dark-grey')
+            +hr('horizontal')
+            .chat__left__chat_previews
+                +chat_preview('Андрей', 'Изображение', '10:49', '2')
+                +chat_preview('Александр', 'Спасибо', 'Пт', '0')
+        +hr('vertical')
+        .chat__right
+            .chat__right__chosen_chat
+                .chat__right__chosen_chat__pfp
+                .chat__right__chosen_chat__name
+                    +text('Вадим', 13, 600, 'black')
+                .chat__right__chosen_chat__actions
+                    +text('⋮', 20, 700, 'black')
+            +hr('horizontal')
+            .chat__right__messages__date
+                +text('19 июня', 12, 500, 'dark-grey')
+            .chat__right__messages
+                +message('Текст', '11:56', false, true)
+                +message('Еще текст', '12:00', true, false)
+                +message('И тут текст', '12:10', true, true)
+            +hr('horizontal')
+            .chat__right__message_toolbar
+                .chat__right__message_toolbar__button-attach
+                    +button(32, 32, '📎', 'white', 32)
+                .chat__right__message_toolbar__message_input
+                    input(placeholder='Сообщение')
+                .chat__right__message_toolbar__button-send
+                    +button(28, 28, '➜', 'blue', 32)

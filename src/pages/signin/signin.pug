@@ -1,0 +1,15 @@
+extends ../global
+
+block content
+    link(rel='stylesheet' href='signin.scss')
+    +modal
+        .signin
+            h1.signin__title
+                +text('Вход', 20, 500, 'black')
+            .signin__fields
+                +field('Логин', 'text')
+                +field('Пароль', 'password')
+            .signin__submit
+                +button(280, 37, 'Авторизоваться', 'blue', 8)
+            .signin__signup_link
+                +link('Нет аккаунта?', 'dummy', 11, 500, 'blue')
