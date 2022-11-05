@@ -1,0 +1,19 @@
+export default `
+.chat_preview_wrapper
+    div(component='delimiter')
+    .chat_preview
+        .chat_preview__left
+            .chat_preview__left__pfp
+        .chat_preview__center
+            .chat_preview__center__name
+                p(component='name')
+            .chat_preview__center__last_msg
+                p(component='lastMsg')
+            .chat_preview__center__last_msg_date
+                p(component='lastMsgDate')
+        .chat_preview__right
+            .chat_preview__right__date
+                p(component='lastMsgDate')
+            .chat_preview__right__msg_amt
+                p(component='msgAmt')
+`;

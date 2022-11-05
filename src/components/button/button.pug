@@ -1,6 +1,0 @@
-include ../text/text
-
-mixin button(width, height, text, color, border_radius)
-    - const style = `width: ${width}px; height: ${height}px; border-radius: ${border_radius}px`
-    button(class=`${color}-bg`, style=style).button
-        +text(text, 13, 500, 'white')

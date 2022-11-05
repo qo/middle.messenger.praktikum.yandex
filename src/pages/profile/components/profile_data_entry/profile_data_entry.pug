@@ -1,9 +1,0 @@
-include ../../../../components/text/text
-
-mixin profile_data_entry(field, value)
-    .profile_data_entry
-        .profile_data_entry__title
-            +text(field, 13, 500, 'black')
-        .profile_data_entry__value
-            +text(value, 13, 500, 'dark-grey')
-    +hr('horizontal')
