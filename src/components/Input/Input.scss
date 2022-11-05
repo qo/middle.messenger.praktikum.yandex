@@ -1,0 +1,25 @@
+@use '../../variables';
+
+input {
+  height: 100%;
+}
+
+input:focus {
+  border: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+input[type="text"],
+input[type="email"],
+input[type="login"],
+input[type="password"],
+input[type="tel"],
+input[type="name"],
+input::placeholder {
+  font-family: Inter, sans-serif;
+}
+
+.hasError {
+  color: variables.$red;
+}

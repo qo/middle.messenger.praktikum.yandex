@@ -1,23 +1,26 @@
 # Описание
 
-Верстка мессенджера с помощью шаблонизатора Pug, препроцессора SASS и сборщика Parcel.
-Раздача статики на локальном сервере через Express.
+Реализация мессенджера с помощью компонентного подхода.
 
 # Команды
 
 ## npm run build - установка зависимостей и сборка
 
-Тут Parcel собирает Pug и SASS и кладет html и css в папку dist.
+Тут Parcel собирает html, scss и ts и кладет html и css в папку dist.
 
 ## npm run start - старт сервера на localhost:3000
 
 Тут Express раздает статику из папки dist. Чтобы юзать эту команду, предварительно надо собрать проект через npm run build.
 
+## npm run dev - сборка и запуск сервера
+
+Тут просто запускаются build и start вместе
+
 # Деплой
 
 Для деплоя на Netlify нужно указать:
-npm run build в качестве build command.
-dist в качестве publish directory.
+- npm run build в качестве build command.
+- dist в качестве publish directory.
 
 # Мой деплой
 

@@ -1,0 +1,33 @@
+@use '../../../../variables';
+
+.profile_data_entry_wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.profile_data_entry {
+  display: flex;
+  font-size: 13px;
+  font-weight: 500;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.profile_data_entry__title {
+  color: variables.$black;
+}
+
+.profile_data_entry__value > input {
+  &[type="text"],
+  &[type="email"],
+  &[type="login"],
+  &[type="tel"],
+  &[type="name"],
+  &::placeholder {
+    color: variables.$dark-grey;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: right;
+  }
+}

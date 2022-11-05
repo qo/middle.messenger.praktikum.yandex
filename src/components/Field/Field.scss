@@ -1,0 +1,26 @@
+@use '../../variables';
+
+.field {
+  height: 30px;
+  width: 100%;
+}
+
+.field__title {
+  color: variables.$dark-grey;
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.field__input {
+  align-items: center;
+  border-bottom: 1px solid variables.$blue;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.field__input > input {
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
