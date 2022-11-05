@@ -1,0 +1,20 @@
+include ../../../../components/text/text
+
+mixin chat_preview(name, lastMsg, lastMsgDate, msgAmt)
+    link(rel="stylesheet" href="../../components/text/text.scss")
+    .chat_preview
+        .chat_preview__left
+            .chat_preview__left__pfp
+        .chat_preview__center
+            .chat_preview__center__name
+                +text(name, 13, 600, 'black')
+            .chat_preview__center__last_msg
+                +text(lastMsg, 12, 500, 'dark-grey')
+        .chat_preview__right
+            .chat_preview__right__date
+                +text(lastMsgDate, 9, 500, 'dark-grey')
+            if msgAmt !== '0'
+                .chat_preview__right__msg_amt
+                    +text(msgAmt, 11, 500, 'white')
+    +hr('horizontal')
+

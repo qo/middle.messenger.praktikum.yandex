@@ -1,0 +1,9 @@
+mixin error(code, description)
+    link(rel="stylesheet" href='error.scss')
+    .error
+        .error__code
+            +text(code, 40, 500, 'black')
+        .error__description
+            +text(description, 20, 500, 'black')
+        .error__back_to_chats
+            +link('Назад к чатам', 'dummy', 11, 500, 'blue')

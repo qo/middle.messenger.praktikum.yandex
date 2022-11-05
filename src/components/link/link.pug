@@ -1,0 +1,5 @@
+include ../text/text
+
+mixin link(text, value, size, weight, color)
+    a(href=value)
+        +text(text, size, weight, color)
