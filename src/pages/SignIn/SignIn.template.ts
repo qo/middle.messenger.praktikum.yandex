@@ -1,6 +1,6 @@
 export default `
 .signin_wrapper
-    form.signin
+    form.signin(id='form' novalidate)
         h1.signin__title
             p(component='titleText')
         .signin__fields
