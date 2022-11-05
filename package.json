@@ -36,14 +36,14 @@
     "process": "^0.11.10",
     "pug-cli": "^1.0.0-alpha6",
     "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-sass-guidelines": "^9.0.1"
+    "stylelint-config-sass-guidelines": "^9.0.1",
+    "typescript": "^4.8.4",
+    "stylelint": "^14.14.1"
   },
   "dependencies": {
     "@types/pug": "^2.0.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "pug": "^3.0.2",
-    "stylelint": "^14.14.1",
-    "typescript": "^4.8.4"
+    "pug": "^3.0.2"
   }
 }
