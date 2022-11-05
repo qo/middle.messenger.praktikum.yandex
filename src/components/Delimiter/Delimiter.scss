@@ -1,0 +1,13 @@
+@use '../../variables';
+
+.vertical {
+  background-color: variables.$mid-grey;
+  height: 100%;
+  width: 1px;
+}
+
+.horizontal {
+  background-color: variables.$mid-grey;
+  height: 1px;
+  width: 100%;
+}

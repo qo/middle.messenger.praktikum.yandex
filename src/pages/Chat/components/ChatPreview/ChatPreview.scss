@@ -1,0 +1,69 @@
+@use '../../../../variables';
+
+.chat_preview_wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.chat_preview {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 67px;
+  width: 100%;
+}
+
+.chat_preview__left {
+  margin-right: 10px;
+}
+
+.chat_preview__center {
+  flex: 1;
+}
+
+.chat_preview__right {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chat_preview__left__pfp {
+  background: variables.$mid-grey;
+  border-radius: 100%;
+  height: 47px;
+  width: 47px;
+}
+
+.chat_preview__center__name {
+  color: variables.$black;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.chat_preview__center__last_msg {
+  color: variables.$dark-grey;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.chat_preview__right__date {
+  color: variables.$dark-grey;
+  font-size: 9px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.chat_preview__right__msg_amt {
+  align-items: center;
+  background-color: variables.$blue;
+  border-radius: 100%;
+  color: variables.$white;
+  display: flex;
+  font-size: 11px;
+  font-weight: 500;
+  height: 20px;
+  justify-content: center;
+  width: 20px;
+}

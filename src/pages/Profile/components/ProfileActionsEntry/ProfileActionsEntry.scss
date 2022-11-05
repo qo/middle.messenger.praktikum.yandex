@@ -1,0 +1,26 @@
+@use '../../../../variables';
+
+.profile_actions_entry_wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.profile_actions_entry {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  &__link-blue {
+    color: variables.$blue;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  &__link-red {
+    color: variables.$red;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+}
