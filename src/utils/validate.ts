@@ -8,19 +8,14 @@ export default function validate(
 	type: "email" | "login" | "password" | "tel" | "name" | "text",
 	value: string
 ): boolean {
-
 	if (!value.length) return false;
-
-	console.log(value);
-	console.log(type);
-
 	switch (type) {
-	case ("email"): return checkEmail(value);
-	case ("login"): return checkLogin(value);
-	case ("password"): return checkPassword(value);
-	case ("tel"): return checkTel(value);
-	case ("name"): return checkName(value);
-	case ("text"): return true;
+		case ("email"): return checkEmail(value);
+		case ("login"): return checkLogin(value);
+		case ("password"): return checkPassword(value);
+		case ("tel"): return checkTel(value);
+		case ("name"): return checkName(value);
+		case ("text"): return true;
 	}
 
 }
