@@ -4,8 +4,8 @@
   "description": "---",
   "scripts": {
     "build": "npm install && parcel build src/index.html --no-cache",
-    "start": "node src/server.js",
-    "dev": "npm run build && npm run start",
+    "serve": "node src/server.js",
+    "start": "npm run build && npm run start",
     "lint:scss": "npx stylelint \"**/*.scss\"",
     "lint:scss:fix": "npx stylelint \"**/*.scss\" --fix",
     "lint:ts": "eslint --ext .ts ./",
