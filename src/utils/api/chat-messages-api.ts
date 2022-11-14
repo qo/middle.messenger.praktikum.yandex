@@ -1,4 +1,4 @@
-import HTTP from './http';
+import HTTP from '../http';
 import BaseAPI from "./base-api";
 
 const chatMessagesAPIInstance = new HTTP('api/v1/messages');

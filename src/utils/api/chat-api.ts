@@ -1,4 +1,4 @@
-import HTTP from "./http";
+import HTTP from "../http";
 import BaseAPI from "./base-api";
 
 const chatAPIInstance = new HTTP('api/v1/chats/');
