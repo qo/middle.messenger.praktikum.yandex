@@ -12,10 +12,18 @@ function queryStringify(data: Record<string, string>) {
 	return `?${entries.join("&")}`;
 }
 
-export default class Request {
+export default class HTTP {
 
-	get = (url: string, options: { data: Record<string, string>, timeout: number }) => {
-		const queryUrl = options.data ? `${url}${queryStringify(options.data)}` : url;
+	private _baseURL: string;
+
+	constructor(baseURL: string) {
+		this._baseURL = baseURL;
+	}
+
+	private _getFullUrl = (endpoint: string) => this._baseURL + endpoint;
+
+	get = (endpoint: string, options?: { data: Record<string, string>, timeout?: number }) => {
+		const queryUrl = options && options.data ? `${endpoint}${queryStringify(options.data)}` : endpoint;
 		console.log(queryUrl);
 		return this.request(
 			queryUrl,
@@ -23,29 +31,31 @@ export default class Request {
 		);
 	};
 
-	put = (url: string, options: { data: Record<string, string>, timeout: number }) =>
+	put = (endpoint: string, options?: { data: Record<string, string>, timeout?: number }) =>
 		this.request(
-			url,
+			endpoint,
 			{...options, method: METHODS.PUT}
 		);
 
-	post = (url: string, options: { data: Record<string, string>, timeout: number }) =>
+	post = (endpoint: string, options?: { data: Record<string, string>, timeout?: number }) =>
 		this.request(
-			url,
+			endpoint,
 			{...options, method: METHODS.POST}
 		);
 
-	delete = (url: string, options: { data: Record<string, string>, timeout: number }) =>
+	delete = (endpoint: string, options?: { data: Record<string, string>, timeout?: number }) =>
 		this.request(
-			url,
+			endpoint,
 			{...options, method: METHODS.DELETE}
 		);
 
 	// options:
 	// headers — obj
 	// data — obj
-	request = (url: string, options: { method: METHODS, data: Record<string, string>, headers?: Record<string, string>, timeout?: number } ) => {
+	request = (endpoint: string, options: { method: METHODS, data?: Record<string, string>, headers?: Record<string, string>, timeout?: number } ) => {
 		return new Promise((resolve, reject) => {
+
+			const url = this._getFullUrl(endpoint);
 
 			const xhr = new XMLHttpRequest();
 
