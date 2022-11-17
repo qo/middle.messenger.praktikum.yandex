@@ -1,5 +1,5 @@
-import Component, {ComponentProps} from "../services/Component";
-import Store, {StoreEvents} from "../services/Store";
+import Component, {ComponentProps} from "../Component";
+import Store, {StoreEvents} from "./Store";
 
 export default function connect(ComponentClass: typeof Component) {
 
@@ -8,7 +8,7 @@ export default function connect(ComponentClass: typeof Component) {
             // не забываем передать все аргументы конструктора
             super(tagName, props);
 
-            // подписываемся на событие
+            // подписываемся на событие обновления стора
             Store.on(StoreEvents.updated, () => {
                 // вызываем обновление компонента, передав данные из хранилища
                 this.setProps({...Store.getState()});

@@ -1,5 +1,5 @@
 import ChatAPI from "../api/chat-api";
-import Store from "../../services/Store";
+import Store from "../../services/Store/Store";
 
 export default class ChatAPIController {
     public getChat() {
