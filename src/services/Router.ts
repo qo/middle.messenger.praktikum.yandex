@@ -1,15 +1,6 @@
 import Component from "./Component";
 import {ComponentProps} from "./Component";
-
-function render(query: string, comp: Component) {
-    const root = document.querySelector(query);
-    if (root) {
-        root.appendChild(comp.getContent());
-        return root;
-    }
-    else
-        throw new Error(`No ${query} element`);
-}
+import replaceElementWithComponent from "../utils/replaceElementWithComponent";
 
 interface ComponentConstructor {
     new (): Component;
@@ -49,7 +40,7 @@ class Route {
     render() {
         if (!this._block) {
             this._block = new this._blockClass();
-            render(this._props.rootQuery, this._block);
+            replaceElementWithComponent(this._props.rootQuery, this._block);
             return;
         }
 
@@ -59,24 +50,16 @@ class Route {
 
 export default class Router {
 
-    static __instance: Router;
     routes: Route[];
     history: History;
     _currentRoute: Route | null;
     _rootQuery: string;
 
     constructor(rootQuery: string) {
-
-        if (Router.__instance) {
-            return Router.__instance;
-        }
-
         this.routes = [];
         this.history = window.history;
         this._currentRoute = null;
         this._rootQuery = rootQuery;
-
-        Router.__instance = this;
     }
 
     use(pathname: string, block: ComponentConstructor) {

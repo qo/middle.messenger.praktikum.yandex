@@ -5,7 +5,8 @@ enum METHODS {
     DELETE = "DELETE"
 }
 
-function queryStringify(data: Record<string, string>) {
+// unknown может спровоцировать ошибку
+function queryStringify(data: Record<string, unknown>) {
 	const entries = Object.entries(data).map(
 		([key, val]) => (`${key}=${val}`)
 	);
@@ -22,7 +23,7 @@ export default class HTTP {
 
 	private _getFullUrl = (endpoint: string) => this._baseURL + endpoint;
 
-	get = (endpoint: string, options?: { data: Record<string, string>, timeout?: number }) => {
+	get = (endpoint: string, options?: { data: Record<string, unknown>, timeout?: number }) => {
 		const queryUrl = options && options.data ? `${endpoint}${queryStringify(options.data)}` : endpoint;
 		console.log(queryUrl);
 		return this.request(
@@ -31,19 +32,19 @@ export default class HTTP {
 		);
 	};
 
-	put = (endpoint: string, options?: { data: Record<string, string>, timeout?: number }) =>
+	put = (endpoint: string, options?: { data: Record<string, unknown>, timeout?: number }) =>
 		this.request(
 			endpoint,
 			{...options, method: METHODS.PUT}
 		);
 
-	post = (endpoint: string, options?: { data: Record<string, string>, timeout?: number }) =>
+	post = (endpoint: string, options?: { data: Record<string, unknown>, timeout?: number }) =>
 		this.request(
 			endpoint,
 			{...options, method: METHODS.POST}
 		);
 
-	delete = (endpoint: string, options?: { data: Record<string, string>, timeout?: number }) =>
+	delete = (endpoint: string, options?: { data: Record<string, unknown>, timeout?: number }) =>
 		this.request(
 			endpoint,
 			{...options, method: METHODS.DELETE}
@@ -52,7 +53,7 @@ export default class HTTP {
 	// options:
 	// headers — obj
 	// data — obj
-	request = (endpoint: string, options: { method: METHODS, data?: Record<string, string>, headers?: Record<string, string>, timeout?: number } ) => {
+	request = (endpoint: string, options: { method: METHODS, data?: Record<string, unknown>, headers?: Record<string, string>, timeout?: number } ) => {
 		return new Promise((resolve, reject) => {
 
 			const url = this._getFullUrl(endpoint);
@@ -72,11 +73,13 @@ export default class HTTP {
 			xhr.timeout = options.timeout || 5000;
 			xhr.ontimeout = () => reject("Timeout occured");
 
-			if (options.method === METHODS.GET || !options.data)
+			if (options.method === METHODS.GET || !options.data) {
 				xhr.send();
-			else
-			// @ts-ignore
-				xhr.send(options.data);
+			}
+			else {
+				xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+				xhr.send(JSON.stringify(options.data));
+			}
 		});
 	};
 }

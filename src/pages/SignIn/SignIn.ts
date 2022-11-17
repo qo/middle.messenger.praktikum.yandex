@@ -9,7 +9,8 @@ import "./SignIn.scss";
 import replaceElementWithComponent from "../../utils/replaceElementWithComponent";
 import SignUp from "../SignUp/SignUp";
 import validate from "../../utils/validate";
-import Chat from "../Chat/Chat";
+import AuthAPIController from "../../utils/controllers/auth-api-controller";
+import router from "../../index";
 
 export default class SignIn extends Component {
 
@@ -45,16 +46,24 @@ export default class SignIn extends Component {
 				e.preventDefault();
 
 				const inputs = Array.from(form.querySelectorAll("input"));
-				inputs.forEach(
-					input => console.log(input.value)
-				);
 				const isValid = inputs.every(
 					// @ts-ignore
 					input => validate(input.type, input.value)
 				);
 
-				if (isValid)
-					replaceElementWithComponent("#root", new Chat());
+				if (isValid) {
+					const formData = {
+						"login": inputs[0].value,
+						"password": inputs[1].value
+					};
+					const controller = new AuthAPIController();
+					controller.signIn(formData)
+						.then(data => {
+							// @ts-ignore
+							if (data.response === 'OK')
+								router.go('/chat');
+						})
+				}
 				else
 					console.log("Форма заполнена неправильно");
 			});

@@ -20,8 +20,8 @@ interface UserResponse {
     "avatar": string
 }
 
-export default UserAPIController {
-    public getUser(req: UserRequest) {
-        UserAPI.getUser()
+export default class UserAPIController {
+    public getUser(req: UserRequest): UserResponse {
+        return UserAPI.getUser(req);
     }
 }

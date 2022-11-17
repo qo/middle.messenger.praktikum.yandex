@@ -24,7 +24,7 @@ interface UserResponse {
 const chatAPIInstance = new HTTP('https://ya-praktikum.tech/api/v2/user');
 
 export default class UserAPI extends BaseAPI {
-    public getProfile(req: UserRequest) {
+    public getProfile(req: UserRequest): UserResponse {
         const res = chatAPIInstance.put(
             '/profile',
             {

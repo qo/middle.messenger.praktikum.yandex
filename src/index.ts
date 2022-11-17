@@ -50,15 +50,4 @@ routes.forEach(
 
 router.start();
 
-routes.forEach(
-    (route, idx) => {
-        const timeout = (idx + 1) * 1000;
-        const backTimeout = (idx + 1 + routes.length) * 1000;
-        setTimeout(() => {
-            router.go(route.pathname);
-        }, timeout);
-        setTimeout(() => {
-            router.back();
-        }, backTimeout);
-    }
-);
+export default router;
