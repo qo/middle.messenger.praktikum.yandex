@@ -14,7 +14,7 @@ export default class AuthAPIController {
     public getUser() {
         return authAPI.getUser()
     }
-    public logout() {
+    public logOut() {
         return authAPI.logOut()
     }
 }

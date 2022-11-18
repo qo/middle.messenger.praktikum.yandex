@@ -8,10 +8,18 @@ import ProfileDataEntry from "./components/ProfileDataEntry/ProfileDataEntry";
 import "./Profile.scss";
 import replaceElementWithComponent from "../../utils/replaceElementWithComponent";
 import SignIn from "../SignIn/SignIn";
+import AuthAPIController from "../../utils/controllers/auth-api-controller";
+import router from "../../index";
 
 export default class Profile extends Component {
 
 	constructor() {
+
+		const controller = new AuthAPIController();
+		controller.getUser()
+			// @ts-ignore
+			.then(res => JSON.parse(res.response))
+			.then(data => console.log(data));
 
 		const goBack = new GoBack({});
 		const profileTitle = new Text({ text: "Иван" });
@@ -25,7 +33,19 @@ export default class Profile extends Component {
 
 		const changeDataAction = new ProfileActionsEntry({ text: "Изменить данные", action: () => {}, color: "blue" });
 		const changePasswordAction = new ProfileActionsEntry({ text: "Изменить пароль", action: () => {}, color: "blue" });
-		const logOutAction = new ProfileActionsEntry({ text: "Выйти", action: () => replaceElementWithComponent("#root", new SignIn()), color: "red" });
+		const logOutAction = new ProfileActionsEntry({
+			text: "Выйти",
+			action: () => {
+				const controller = new AuthAPIController();
+				controller.logOut()
+					.then(res => {
+						// @ts-ignore
+						if (res.response === 'OK')
+							router.go('/sign-in');
+					});
+			},
+			color: "red"
+		});
 
 		super("div", {
 			"children": {

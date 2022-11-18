@@ -1,37 +1,25 @@
 import HTTP from "../http";
-import BaseAPI from "./base-api";
-
-interface UserRequest {
-    "first_name": string,
-    "second_name": string,
-    "display_name": string,
-    "login": string,
-    "email": string,
-    "phone": string
-}
-
-interface UserResponse {
-    "id": number,
-    "first_name": string,
-    "second_name": string,
-    "display_name": string,
-    "login": string,
-    "email": string,
-    "phone": string,
-    "avatar": string
-}
+import UserRequest from "../api-interfaces/users/change-profile";
+import PasswordRequest from "../api-interfaces/users/change-profile-password";
 
 const chatAPIInstance = new HTTP('https://ya-praktikum.tech/api/v2/user');
 
-export default class UserAPI extends BaseAPI {
-    public getProfile(req: UserRequest): UserResponse {
-        const res = chatAPIInstance.put(
+export default class UserAPI {
+    public changeProfile(req: UserRequest): Promise<unknown> {
+        return chatAPIInstance.put(
             '/profile',
             {
                 data: req
             }
         );
-        return res;
+    }
+    public changePassword(req: PasswordRequest): Promise<unknown> {
+        return chatAPIInstance.put(
+            '/password',
+            {
+                data: req
+            }
+        );
     }
 }
 

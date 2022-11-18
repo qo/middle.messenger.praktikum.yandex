@@ -9,6 +9,8 @@ import "./SignUp.scss";
 import replaceElementWithComponent from "../../utils/replaceElementWithComponent";
 import SignIn from "../SignIn/SignIn";
 import validate from "../../utils/validate";
+import AuthAPIController from "../../utils/controllers/auth-api-controller";
+import router from "../../index";
 
 export default class SignUp extends Component {
 
@@ -54,21 +56,32 @@ export default class SignUp extends Component {
 				e.preventDefault();
 
 				const inputs = Array.from(form.querySelectorAll("input"));
-				inputs.forEach(
-					input => console.log(input.value)
-				);
 				const isValid = inputs.every(
 					// @ts-ignore
 					input => validate(input.type, input.value)
 				);
 
-				if (isValid)
-					replaceElementWithComponent("#root", new SignIn());
+				if (isValid) {
+					const formData = {
+						"first_name": inputs[2].value,
+						"second_name": inputs[3].value,
+						"login": inputs[1].value,
+						"email": inputs[0].value,
+						"password": inputs[5].value,
+						"phone": inputs[4].value
+					};
+					const controller = new AuthAPIController();
+					controller.signUp(formData)
+						.then(data => {
+							console.log(data);
+							// @ts-ignore
+							if (data.status === 200)
+								router.go('/sign-in');
+						});
+				}
 				else
 					console.log("Форма заполнена неправильно");
-			});
+			})
 		}
-
 	}
-
 }

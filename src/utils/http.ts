@@ -67,6 +67,11 @@ export default class HTTP {
 					([key, val]) => xhr.setRequestHeader(key, val)
 				);
 
+			// Прикрепляем куки для всех запросов
+			// (мне лень делать флаг типа "attachCookies"
+			// для этой функции)
+			xhr.withCredentials = true;
+
 			xhr.onload = () => resolve(xhr);
 			xhr.onabort = () => reject("Aborted");
 			xhr.onerror = () => reject("Error occured");
