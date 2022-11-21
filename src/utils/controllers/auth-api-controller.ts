@@ -1,20 +1,21 @@
 import AuthAPI from "../api/auth-api";
 import {SignInRequest} from "../api-interfaces/auth/signin";
 import {SignUpRequest} from "../api-interfaces/auth/signup";
+import {UserResponse, isUserResponse} from "../api-interfaces/auth/user";
 
 const authAPI = new AuthAPI();
 
 export default class AuthAPIController {
-    public signIn(req: SignInRequest) {
-        return authAPI.signIn(req)
+    async signIn(req: SignInRequest) {
+        return await authAPI.signIn(req)
     }
-    public signUp(req: SignUpRequest) {
-        return authAPI.signUp(req)
+    async signUp(req: SignUpRequest) {
+        return await authAPI.signUp(req)
     }
-    public getUser() {
-        return authAPI.getUser()
+    async getUser() {
+        return await authAPI.getUser();
     }
-    public logOut() {
-        return authAPI.logOut()
+    async logOut() {
+        return await authAPI.logOut()
     }
 }

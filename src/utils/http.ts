@@ -23,37 +23,64 @@ export default class HTTP {
 
 	private _getFullUrl = (endpoint: string) => this._baseURL + endpoint;
 
-	get = (endpoint: string, options?: { data: Record<string, unknown>, timeout?: number }) => {
-		const queryUrl = options && options.data ? `${endpoint}${queryStringify(options.data)}` : endpoint;
-		console.log(queryUrl);
-		return this.request(
-			queryUrl,
-			{...options, method: METHODS.GET}
-		);
+	async get<T>(
+		endpoint: string,
+		options?: {
+			data: Record<string, unknown>,
+			timeout?: number
+		}): Promise<T> {
+			const queryUrl = options && options.data ? `${endpoint}${queryStringify(options.data)}` : endpoint;
+			return this.request(
+				queryUrl,
+				{...options, method: METHODS.GET}
+			);
 	};
 
-	put = (endpoint: string, options?: { data: Record<string, unknown>, timeout?: number }) =>
-		this.request(
-			endpoint,
-			{...options, method: METHODS.PUT}
-		);
+	async put<T>(
+		endpoint: string,
+		options?: {
+			data: Record<string, unknown>,
+			timeout?: number
+		}): Promise<T> {
+			return this.request(
+				endpoint,
+				{...options, method: METHODS.PUT}
+			);
+	}
 
-	post = (endpoint: string, options?: { data: Record<string, unknown>, timeout?: number }) =>
-		this.request(
-			endpoint,
-			{...options, method: METHODS.POST}
-		);
+	async post<T>(
+		endpoint: string,
+		options?: {
+			data: Record<string, unknown>,
+			timeout?: number
+		}): Promise<T> {
+			return this.request(
+				endpoint,
+				{...options, method: METHODS.POST}
+			);
+	}
 
-	delete = (endpoint: string, options?: { data: Record<string, unknown>, timeout?: number }) =>
-		this.request(
-			endpoint,
-			{...options, method: METHODS.DELETE}
-		);
+	async delete<T>(
+		endpoint: string,
+		options?: {
+			data: Record<string, unknown>,
+			timeout?: number
+		}): Promise<T> {
+			return this.request(
+				endpoint,
+				{...options, method: METHODS.DELETE}
+			);
+	}
 
-	// options:
-	// headers — obj
-	// data — obj
-	request = (endpoint: string, options: { method: METHODS, data?: Record<string, unknown>, headers?: Record<string, string>, timeout?: number } ) => {
+	async request<T>(
+		endpoint: string,
+		options: {
+			method: METHODS,
+			data?: Record<string, unknown>,
+			headers?: Record<string, string>,
+			timeout?: number
+		}): Promise<T> {
+
 		return new Promise((resolve, reject) => {
 
 			const url = this._getFullUrl(endpoint);
@@ -72,7 +99,17 @@ export default class HTTP {
 			// для этой функции)
 			xhr.withCredentials = true;
 
-			xhr.onload = () => resolve(xhr);
+			xhr.onload = () => {
+				let res;
+				if (xhr.getResponseHeader('Content-Type') === 'application/json')
+					res = JSON.parse(xhr.response)
+				else
+					res = xhr.response;
+				if (xhr.status === 200)
+					resolve(res);
+				else
+					reject(res);
+			};
 			xhr.onabort = () => reject("Aborted");
 			xhr.onerror = () => reject("Error occured");
 			xhr.timeout = options.timeout || 5000;

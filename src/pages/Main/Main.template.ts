@@ -13,6 +13,10 @@ export default `
             li.index__pages__list__item
                 a(component='profileLink').index__pages__list__item__link
             li.index__pages__list__item
+                a(component='changeAvatarLink').index__pages__list__item__link
+            li.index__pages__list__item
+                a(component='changePasswordLink').index__pages__list__item__link
+            li.index__pages__list__item
                 a(component='signinLink').index__pages__list__item__link
             li.index__pages__list__item
                 a(component='signupLink').index__pages__list__item__link

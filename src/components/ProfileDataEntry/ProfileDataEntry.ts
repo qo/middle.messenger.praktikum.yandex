@@ -1,11 +1,11 @@
 import { compile } from "pug";
-import Component from "../../../../services/Component";
+import Component from "../../services/Component";
 import ProfileDataEntryProps from "./ProfileDataEntryProps";
 import ProfileDataEntryTemplate from "./ProfileDataEntry.template";
-import Text from "../../../../components/Text/Text";
-import Delimiter from "../../../../components/Delimiter/Delimiter";
+import Text from "../../components/Text/Text";
+import Delimiter from "../../components/Delimiter/Delimiter";
 import "./ProfileDataEntry.scss";
-import Input from "../../../../components/Input/Input";
+import Input from "../../components/Input/Input";
 
 export default class ProfileDataEntry extends Component {
 	constructor(props: ProfileDataEntryProps) {

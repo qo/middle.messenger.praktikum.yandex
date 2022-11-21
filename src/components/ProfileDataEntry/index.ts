@@ -1,4 +1,4 @@
-import connect from "../../../../services/Store/connect";
+import connect from "../../services/Store/connect";
 import ProfileDataEntry from "./ProfileDataEntry";
 
 // @ts-ignore

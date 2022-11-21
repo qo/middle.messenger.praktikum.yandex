@@ -6,6 +6,8 @@ import Error500 from "./pages/Error/Error500/Error500";
 import Profile from "./pages/Profile/Profile";
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
+import ChangeAvatar from "./pages/ChangeAvatar/ChangeAvatar";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 
 const router = new Router('#root');
 
@@ -29,6 +31,14 @@ const routes = [
     {
         pathname: '/profile',
         component: Profile
+    },
+    {
+        pathname: '/change-avatar',
+        component: ChangeAvatar
+    },
+    {
+        pathname: '/change-password',
+        component: ChangePassword
     },
     {
         pathname: '/sign-in',
