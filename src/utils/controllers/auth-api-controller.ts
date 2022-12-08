@@ -1,7 +1,6 @@
 import AuthAPI from "../api/auth-api";
 import {SignInRequest} from "../api-interfaces/auth/signin";
 import {SignUpRequest} from "../api-interfaces/auth/signup";
-import {UserResponse, isUserResponse} from "../api-interfaces/auth/user";
 
 const authAPI = new AuthAPI();
 

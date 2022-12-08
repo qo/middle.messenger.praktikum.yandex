@@ -3,10 +3,10 @@ import Store, {StoreEvents} from "./Store";
 
 export default function connect(ComponentClass: typeof Component) {
 
-    abstract class ConnectedComponent extends ComponentClass {
-        constructor(tagName = "div", props: ComponentProps) {
+    class ConnectedComponent extends ComponentClass {
+        constructor(props: ComponentProps) {
             // не забываем передать все аргументы конструктора
-            super(tagName, props);
+            super(props);
 
             // подписываемся на событие обновления стора
             Store.on(StoreEvents.updated, () => {
@@ -14,7 +14,6 @@ export default function connect(ComponentClass: typeof Component) {
                 this.setProps({...Store.getState()});
             });
         }
-        abstract render(): string;
     }
 
     return ConnectedComponent;

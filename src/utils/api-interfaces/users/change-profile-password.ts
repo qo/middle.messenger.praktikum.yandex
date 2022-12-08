@@ -1,4 +1,4 @@
-export default interface PasswordRequest extends Record<string, unknown> {
+export default interface PasswordRequest {
     "oldPassword": string,
     "newPassword": string
 }

@@ -1,4 +1,4 @@
-export default interface UserRequest extends Record<string, unknown> {
+export default interface UserRequest {
     "first_name": string,
     "second_name": string,
     "display_name": string,

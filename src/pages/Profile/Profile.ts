@@ -48,7 +48,7 @@ export default class Profile extends Component {
 				controller.logOut()
 					.then(res => {
 						// @ts-ignore
-						if (res.response === 'OK')
+						if (res === 'OK')
 							router.go('/sign-in');
 					});
 			},

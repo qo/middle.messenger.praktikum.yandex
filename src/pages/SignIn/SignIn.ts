@@ -39,7 +39,7 @@ export default class SignIn extends Component {
 
 	postRender() {
 
-		const form = this._element.firstChild as HTMLFormElement;
+		const form = this._element.querySelector("form");
 
 		if (form) {
 			form.addEventListener("submit", (e) => {
@@ -58,9 +58,9 @@ export default class SignIn extends Component {
 					};
 					const controller = new AuthAPIController();
 					controller.signIn(formData)
-						.then(data => {
+						.then(res => {
 							// @ts-ignore
-							if (data.response === 'OK')
+							if (res === 'OK')
 								router.go('/chat');
 						})
 				}
@@ -68,7 +68,6 @@ export default class SignIn extends Component {
 					console.log("Форма заполнена неправильно");
 			});
 		}
-
 	}
 
 }

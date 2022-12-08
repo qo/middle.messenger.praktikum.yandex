@@ -9,9 +9,13 @@ import validate from "../../utils/validate";
 export default class Input extends Component {
 	constructor(props: InputProps) {
 
+		const inputLabel = new Text({ text: props.label || "", tagName: "label" })
 		const inputPlaceholder = new Text({ text: props.placeholder || "" });
 
-		super("div", { ...props, children: { "inputPlaceholder": inputPlaceholder }});
+		super("div", { ...props, children: {
+			"inputPlaceholder": inputPlaceholder,
+			"inputLabel": inputLabel
+		}});
 	}
 
 	render() {

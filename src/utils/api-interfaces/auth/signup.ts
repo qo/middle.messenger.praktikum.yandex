@@ -1,4 +1,4 @@
-export interface SignUpRequest extends Record<string, unknown> {
+export interface SignUpRequest {
     "first_name": string,
     "second_name": string,
     "login": string,
@@ -7,6 +7,6 @@ export interface SignUpRequest extends Record<string, unknown> {
     "phone": string
 }
 
-export interface SignUpResponse extends Record<string, unknown> {
+export interface SignUpResponse {
     id: number
 }

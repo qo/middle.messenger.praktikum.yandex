@@ -1,3 +1,5 @@
 export default `
-input(placeholder=placeholder, type=type)
+div
+    label(component='inputLabel')
+    input(placeholder=placeholder, type=type)
 `;

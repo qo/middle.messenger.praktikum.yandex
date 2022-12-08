@@ -6,7 +6,7 @@ import "./Text.scss";
 
 export default class Text extends Component {
 	constructor(props: TextProps) {
-		super("p", props);
+		super(props.tagName || "p", props);
 	}
 
 	render() {

@@ -1,4 +1,4 @@
-export interface UserResponse extends Record<string, unknown> {
+export interface UserResponse {
     "id": number,
     "first_name": string,
     "second_name": string,

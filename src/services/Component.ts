@@ -6,7 +6,7 @@ export interface ComponentProps {
 	children?: Record<string, Component>
 }
 
-export default abstract class Component {
+export default class Component {
 	static EVENTS = {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
@@ -96,7 +96,7 @@ export default abstract class Component {
 	_render() {
 
 		const html = this.render();
-		const divElement = document.createElement("div");
+		const divElement = document.createElement(this.tagName);
 		divElement.innerHTML = html.trim();
 
 		// Если есть children
@@ -138,7 +138,9 @@ export default abstract class Component {
 
 	}
 
-	abstract render(): string;
+	render(): string {
+		return "Abstract Component";
+	}
 
 	postRender() {}
 

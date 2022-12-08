@@ -26,7 +26,7 @@ export default class HTTP {
 	async get<T>(
 		endpoint: string,
 		options?: {
-			data: Record<string, unknown>,
+			data: any,
 			timeout?: number
 		}): Promise<T> {
 			const queryUrl = options && options.data ? `${endpoint}${queryStringify(options.data)}` : endpoint;
@@ -39,7 +39,7 @@ export default class HTTP {
 	async put<T>(
 		endpoint: string,
 		options?: {
-			data: Record<string, unknown>,
+			data: any,
 			timeout?: number
 		}): Promise<T> {
 			return this.request(
@@ -51,7 +51,7 @@ export default class HTTP {
 	async post<T>(
 		endpoint: string,
 		options?: {
-			data: Record<string, unknown>,
+			data: any,
 			timeout?: number
 		}): Promise<T> {
 			return this.request(
@@ -63,7 +63,7 @@ export default class HTTP {
 	async delete<T>(
 		endpoint: string,
 		options?: {
-			data: Record<string, unknown>,
+			data: any,
 			timeout?: number
 		}): Promise<T> {
 			return this.request(
@@ -76,7 +76,7 @@ export default class HTTP {
 		endpoint: string,
 		options: {
 			method: METHODS,
-			data?: Record<string, unknown>,
+			data?: any,
 			headers?: Record<string, string>,
 			timeout?: number
 		}): Promise<T> {
@@ -119,8 +119,12 @@ export default class HTTP {
 				xhr.send();
 			}
 			else {
-				xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-				xhr.send(JSON.stringify(options.data));
+				if (options.data instanceof FormData)
+					xhr.send(options.data);
+				else {
+					xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+					xhr.send(JSON.stringify(options.data));
+				}
 			}
 		});
 	};

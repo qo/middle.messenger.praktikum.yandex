@@ -14,6 +14,7 @@ import replaceElementWithComponent from "../../utils/replaceElementWithComponent
 
 // @ts-ignore
 import mouse from  "../../assets/images/mouse.png";
+import ChatSocketAPI from "../../utils/api/chat-socket-api";
 
 export default class Chat extends Component {
 
@@ -74,6 +75,10 @@ export default class Chat extends Component {
 				"chatMessage3": chatMessage3
 			}
 		});
+
+		const chatSocketAPI = new ChatSocketAPI();
+		chatSocketAPI.connect(4136);
+
 	}
 
 	render() {
