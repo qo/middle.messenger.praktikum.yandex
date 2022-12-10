@@ -77,7 +77,7 @@ export default class Chat extends Component {
 		});
 
 		const chatSocketAPI = new ChatSocketAPI();
-		chatSocketAPI.connect(4136);
+		chatSocketAPI.connect(56);
 
 	}
 

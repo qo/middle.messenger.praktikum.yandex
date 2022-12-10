@@ -10,7 +10,7 @@ export default class ChatSocketAPI {
         const user = await authAPIController.getUser();
         // @ts-ignore
         const userID = JSON.parse(user).id;
-        const tokenReq = await chatsAPIController.getToken();
+        const tokenReq = await chatsAPIController.getToken(chatID);
         // @ts-ignore
         const token = JSON.parse(tokenReq).token;
         console.log(token);
