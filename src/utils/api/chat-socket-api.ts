@@ -1,5 +1,6 @@
 import ChatsAPIController from "../controllers/chats-api-controller";
 import AuthAPIController from "../controllers/auth-api-controller";
+import Store from "../../services/Store/Store";
 
 const authAPIController = new AuthAPIController();
 const chatsAPIController = new ChatsAPIController();
@@ -41,6 +42,17 @@ export default class ChatSocketAPI {
 
         socket.addEventListener('message', event => {
             console.log('Получены данные', event.data);
+
+            const data = JSON.parse(event.data);
+
+            const messages = Store.getState().messages || [];
+            messages.push({
+                isMine: false,
+                text: data.content,
+                time: data.time.substring(11, 16)
+            });
+
+            Store.set('messages', messages);
         });
 
         socket.addEventListener('error', event => {

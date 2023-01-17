@@ -1,13 +1,13 @@
-import Main from "./pages/Main/Main";
+import Main from "./pages/Main/index";
 import Router from "./services/Router";
-import Chat from "./pages/Chat/Chat";
-import Error404 from "./pages/Error/Error404/Error404";
-import Error500 from "./pages/Error/Error500/Error500";
-import Profile from "./pages/Profile/Profile";
-import SignIn from "./pages/SignIn/SignIn";
-import SignUp from "./pages/SignUp/SignUp";
-import ChangeAvatar from "./pages/ChangeAvatar/ChangeAvatar";
-import ChangePassword from "./pages/ChangePassword/ChangePassword";
+import Chat from "./pages/Chat/index";
+import Error404 from "./pages/Error/Error404/index";
+import Error500 from "./pages/Error/Error500/index";
+import Profile from "./pages/Profile/index";
+import SignIn from "./pages/SignIn/index";
+import SignUp from "./pages/SignUp/index";
+import ChangeAvatar from "./pages/ChangeAvatar/index";
+import ChangePassword from "./pages/ChangePassword/index";
 
 const router = new Router('#root');
 

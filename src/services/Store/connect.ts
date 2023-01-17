@@ -4,7 +4,7 @@ import Store, {StoreEvents} from "./Store";
 export default function connect(ComponentClass: typeof Component) {
 
     class ConnectedComponent extends ComponentClass {
-        constructor(props: ComponentProps) {
+        constructor(props: any) {
             // не забываем передать все аргументы конструктора
             super(props);
 

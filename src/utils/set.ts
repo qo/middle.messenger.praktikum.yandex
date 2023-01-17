@@ -34,7 +34,6 @@ function getObjByPath(path: string, value: unknown) {
 function set(obj: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
     if (typeof obj !== 'object') return obj;
     const objByPath = getObjByPath(path, value);
-    console.log(objByPath);
     return merge(obj as Indexed, objByPath);
 }
 

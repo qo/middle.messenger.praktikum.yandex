@@ -76,13 +76,29 @@ export default class Chat extends Component {
 			}
 		});
 
-		const chatSocketAPI = new ChatSocketAPI();
+		const chatSocketAPI = new ChatSocketAPI(this);
 		chatSocketAPI.connect(56);
 
 	}
 
 	render() {
 		return compile(ChatTemplate)();
+	}
+
+	postRender() {
+		if (this.props.messages) {
+			const messageData = this.props.messages[0];
+			const message4 = new ChatMessage({
+				isMine: messageData.isMine,
+				time: messageData.time,
+				type: "text",
+				text: messageData.text
+			});
+			// @ts-ignore
+			const message4El = this._element.parentElement.querySelector('[component="chatMessage4"]');
+			// @ts-ignore
+			message4El.replaceWith(message4.getContent());
+		}
 	}
 
 }

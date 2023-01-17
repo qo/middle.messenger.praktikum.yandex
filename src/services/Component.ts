@@ -96,8 +96,9 @@ export default class Component {
 	_render() {
 
 		const html = this.render();
-		const divElement = document.createElement(this.tagName);
-		divElement.innerHTML = html.trim();
+
+		if (!this._element.innerHTML)
+			this._element.innerHTML = html.trim();
 
 		// Если есть children
 		if (this.props.children) {
@@ -106,7 +107,7 @@ export default class Component {
 			// и если в props.children есть компонент с таким именем,
 			// заменяем его на содержимое этого компонента
 
-			divElement.querySelectorAll("[component]").forEach(
+			this._element.querySelectorAll("[component]").forEach(
 				(el) => {
 
 					// Имя компонента и те аттрибуты, что присутствуют до замены
@@ -132,7 +133,7 @@ export default class Component {
 
 		}
 
-		this._element = <HTMLElement>divElement.firstChild;
+		this._element = <HTMLElement>this._element.firstChild;
 
 		this.postRender();
 

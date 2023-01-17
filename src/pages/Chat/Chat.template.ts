@@ -25,6 +25,7 @@ export default `
             div(component='chatMessage1')
             div(component='chatMessage2')
             div(component='chatMessage3')
+            div(component='chatMessage4')
         div(component='horizontalDelimiter2')
         .chat__right__message_toolbar
             .chat__right__message_toolbar__button-attach
