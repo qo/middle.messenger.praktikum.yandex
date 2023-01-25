@@ -23,9 +23,6 @@ export default class Profile extends Component {
 
 		const goBack = new GoBack({});
 		const profileTitle = new Text({text: user.first_name});
-		const profileAvatar = new Button({text: "", action: () => {
-
-		}});
 
 		const email = new ProfileDataEntry({title: "Почта", type: "email", placeholder: user.email});
 		const login = new ProfileDataEntry({title: "Логин", type: "login", placeholder: user.login});
@@ -108,6 +105,12 @@ export default class Profile extends Component {
 			color: "red"
 		});
 
+		const changeAvatarAction = new ProfileActionsEntry({
+			text: "Поменять аватар",
+			action: () => router.go('/change-avatar'),
+			color: "blue"
+		});
+
 		super("div", {
 			"children": {
 				"goBack": goBack,
@@ -123,6 +126,7 @@ export default class Profile extends Component {
 				"newPassword": newPassword,
 
 				"updateUserDataAction": updateUserDataAction,
+				"changeAvatarAction": changeAvatarAction,
 				"logOutAction": logOutAction
 			}
 		});
@@ -130,6 +134,43 @@ export default class Profile extends Component {
 
 	render() {
 		return compile(ProfileTemplate)();
+	}
+
+	postRender() {
+
+		const user = Store.getState().user as IUser;
+
+		const profileAvatar = (
+			this.getContent().querySelector('.profile_avatar') as HTMLImageElement
+		);
+
+		if (profileAvatar) profileAvatar.src = this.getAvatarUrl(user.avatar);
+
+		const form = (
+			this
+				.getContent()
+				.querySelector('form.change_avatar') as HTMLFormElement
+		);
+
+		if (form) {
+			form.addEventListener('submit', (e) => {
+				e.preventDefault();
+				const formData = new FormData(form);
+
+				new UserAPIController().changeAvatar(formData).then(() => {
+					router.go('/profile');
+				}).catch((e) => {
+					alert(e.reason);
+				});
+			});
+		}
+	}
+
+	private getAvatarUrl(url?: string) {
+		if (url) {
+			return `https://ya-praktikum.tech/api/v2/resources${url}`;
+		}
+		return 'https://avatars.mds.yandex.net/i?id=2d9d96cf73506a0498ed3ae4f5d2da5f-4779391-images-thumbs&ref=rim&n=33&w=150&h=150';
 	}
 
 }

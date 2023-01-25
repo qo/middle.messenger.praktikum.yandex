@@ -16,9 +16,11 @@
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
   display: flex;
   flex-direction: column;
+  gap: 20px;
   padding: 50px 30px 30px;
   width: 340px;
   height: 257px;
+  font-family: Inter, sans-serif;
 }
 
 .change_avatar__title {
@@ -38,6 +40,7 @@
 
 .change_avatar__button {
   background-color: variables.$blue;
+  color: variables.$white;
   border-radius: 8px;
   height: 37px;
   margin-bottom: 14px;

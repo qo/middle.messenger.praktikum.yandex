@@ -14,23 +14,8 @@ export default class ChangeAvatar extends Component {
 
     constructor() {
 
-        const title = new Text({text: 'Загрузите файл'});
-        const label = new Input({
-            type: "file",
-            label: "Выбрать файл на компьютере"
-        });
-        const button = new Button({
-            text: "Поменять",
-            action: () => {
-            }
-        });
-
         super("div", {
-            "children": {
-                "title": title,
-                "label": label,
-                "button": button
-            }
+            "children": {}
         });
     }
 
@@ -40,10 +25,11 @@ export default class ChangeAvatar extends Component {
 
     postRender() {
 
-        const form = this._element.querySelector("form");
+        const form = this.getContent().querySelector("form");
 
         if (form) {
             form.addEventListener("submit", (e) => {
+
                     e.preventDefault();
 
                     const formData = new FormData(form);

@@ -2,8 +2,8 @@ export default `
 .profile__wrapper
     div(component='goBack')
     .profile
-        .profile__pfp
-            button(component='profileAvatar')
+        .profile_avatar__wrapper
+            img.profile_avatar(src='')
         h1.profile__title
             p(component='profileTitle')
         .profile__data
@@ -17,5 +17,6 @@ export default `
             div(component='newPassword')
         .profile__actions
             div(component='updateUserDataAction')
+            div(component='changeAvatarAction')
             div(component='logOutAction')
 `;

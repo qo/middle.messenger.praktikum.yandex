@@ -29,6 +29,10 @@ const routes = [
         pathname: '/settings',
         component: Profile
     },
+    {
+        pathname: '/change-avatar',
+        component: ChangeAvatar
+    }
 ];
 
 routes.forEach(
