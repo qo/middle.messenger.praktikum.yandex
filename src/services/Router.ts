@@ -1,110 +1,118 @@
-import Component from "./Component";
-import {ComponentProps} from "./Component";
+import { ComponentProps } from "./Component";
 import replaceElementWithComponent from "../utils/replaceElementWithComponent";
-
-interface ComponentConstructor {
-    new (): Component;
-}
+import ConnectedComponent from "./ConnectedComponent";
 
 class Route {
+	_pathname: string;
 
-    _pathname: string;
-    _blockClass: ComponentConstructor;
-    _block: Component | null;
-    _props: ComponentProps;
+	_blockClass: typeof ConnectedComponent;
 
-    constructor(pathname: string, view: ComponentConstructor, props: ComponentProps) {
-        this._pathname = pathname;
-        this._blockClass = view;
-        this._block = null;
-        this._props = props;
-    }
+	_block: ConnectedComponent | null;
 
-    navigate(pathname: string) {
-        if (this.match(pathname)) {
-            this._pathname = pathname;
-            this.render();
-        }
-    }
+	_props: ComponentProps;
 
-    leave() {
-        if (this._block) {
-            this._block.hide();
-        }
-    }
+	constructor(pathname: string, view: typeof ConnectedComponent, props: ComponentProps) {
+		this._pathname = pathname;
+		this._blockClass = view;
+		this._block = null;
+		this._props = props;
+	}
 
-    match(pathname: string) {
-        return pathname === this._pathname;
-    }
+	navigate(pathname: string) {
+		if (this.match(pathname)) {
+			this._pathname = pathname;
+			this.render();
+		}
+	}
 
-    render() {
-        if (!this._block) {
-            this._block = new this._blockClass();
-        }
-        replaceElementWithComponent(this._props.rootQuery, this._block);
-        this._block.show();
-    }
+	leave() {
+		if (this._block) {
+			this._block.hide();
+		}
+	}
+
+	match(pathname: string) {
+		return pathname === this._pathname;
+	}
+
+	render() {
+		console.log("rendering", this);
+		if (!this._block) {
+			this._block = new this._blockClass(this._props);
+		}
+		replaceElementWithComponent(this._props.rootQuery, this._block);
+		this._block.show();
+	}
 }
 
 export default class Router {
+	routes: Route[];
 
-    routes: Route[];
-    history: History;
-    _currentRoute: Route | null;
-    _rootQuery: string;
+	history: History;
 
-    constructor(rootQuery: string) {
-        this.routes = [];
-        this.history = window.history;
-        this._currentRoute = null;
-        this._rootQuery = rootQuery;
-    }
+	_currentRoute: Route | null;
 
-    use(pathname: string, block: ComponentConstructor) {
-        const route = new Route(pathname, block, {rootQuery: this._rootQuery});
+	_rootQuery: string;
 
-        this.routes.push(route);
+	constructor(rootQuery: string) {
+		this.routes = [];
+		this.history = window.history;
+		this._currentRoute = null;
+		this._rootQuery = rootQuery;
+	}
 
-        return this;
-    }
+	use(pathname: string, block: typeof ConnectedComponent) {
+		const route = new Route(pathname, block, { rootQuery: this._rootQuery });
 
-    start() {
-        window.onpopstate = ((event: PopStateEvent) => {
-            // @ts-ignore
-            this._onRoute(event.currentTarget.location.pathname);
-        }).bind(this);
+		this.routes.push(route);
 
-        this._onRoute(window.location.pathname);
-     }
+		return this;
+	}
 
-    _onRoute(pathname: string) {
-        const route = this.getRoute(pathname);
-        if (!route) {
-            return;
-        }
+	start() {
+		window.onpopstate = ((event: PopStateEvent) => {
+			// @ts-ignore
+			this._onRoute(event.currentTarget.location.pathname);
+		});
 
-        if (this._currentRoute && this._currentRoute !== route) {
-            this._currentRoute.leave();
-        }
+		this._onRoute(window.location.pathname);
+	}
 
-        this._currentRoute = route;
-        route.render();
-    }
+	_onRoute(pathname: string) {
+		console.log("now on path", pathname);
 
-    go(pathname: string) {
-        this.history.pushState({}, '', pathname);
-        this._onRoute(pathname);
-    }
+		const route = this.getRoute(pathname);
+		if (!route) {
+			return;
+		}
 
-    back() {
-        this.history.back();
-    }
+		console.log("route");
 
-    forward() {
-        this.history.forward();
-    }
+		if (this._currentRoute && this._currentRoute !== route) {
+			console.log("leaving", this._currentRoute);
+			this._currentRoute.leave();
+		}
 
-    getRoute(pathname: string) {
-        return this.routes.find(route => route.match(pathname));
-    }
+		this._currentRoute = route;
+		route.render();
+	}
+
+	go(pathname: string) {
+		console.log("going on path", pathname);
+
+		this.history.pushState({}, "", pathname);
+		this._onRoute(pathname);
+	}
+
+	back() {
+		this.history.back();
+	}
+
+	forward() {
+		this.history.forward();
+	}
+
+	getRoute(pathname: string) {
+		return this.routes.find((route) => route.match(pathname));
+	}
 }

@@ -1,4 +1,3 @@
-import "./EventBus";
 import EventBus from "./EventBus";
 
 export interface ComponentProps {
@@ -11,20 +10,22 @@ export default class Component {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
 		FLOW_CDU: "flow:component-did-update",
-		FLOW_RENDER: "flow:render"
+		FLOW_RENDER: "flow:render",
 	};
 
 	_element: HTMLElement;
+
 	tagName: string;
+
 	props: ComponentProps;
+
 	eventBus: () => EventBus;
 
 	constructor(tagName = "div", props: ComponentProps = {}) {
-
 		this.tagName = tagName;
 		this.props = this._makePropsProxy(props);
 
-		const eventBus = new EventBus;
+		const eventBus = new EventBus();
 		this.eventBus = () => eventBus;
 
 		this._registerEvents(this.eventBus);
@@ -70,7 +71,6 @@ export default class Component {
 	}
 
 	componentDidUpdate(oldProps: ComponentProps, newProps: ComponentProps) {
-
 		// Здесь можно реализовать
 		// сравнение старых и новых пропсов,
 		// чтобы определить обновились ли пропсы
@@ -78,7 +78,7 @@ export default class Component {
 
 		// В нашем случае будем считать,
 		// что они обновляются всегда
-			return true;
+		{ return true; }
 	}
 
 	setProps = (nextProps: ComponentProps) => {
@@ -94,7 +94,6 @@ export default class Component {
 	}
 
 	_render() {
-
 		const html = this.render();
 
 		if (!this._element.innerHTML) {
@@ -104,39 +103,34 @@ export default class Component {
 
 		// Если есть children
 		if (this.props.children) {
-
 			// Выбираем все DOM-элементы с аттрибутом component,
 			// и если в props.children есть компонент с таким именем,
 			// заменяем его на содержимое этого компонента
 
 			this._element.querySelectorAll("[component]").forEach(
 				(el) => {
-
 					// Имя компонента и те аттрибуты, что присутствуют до замены
 					const name = el.getAttribute("component");
-					const attributes = el.attributes;
+					const { attributes } = el;
 
 					// Если получили имя компонента и этот компонент есть в children
 					if (name && this.props.children && this.props.children[name]) {
-
 						// Получаем компонент
 						const newEl = this.props.children[name].getContent();
 
 						// Копируем старые аттрибуты (кроме "component")
 						for (const attr of attributes) {
-							if (attr.name !== "component")
-								newEl.setAttribute(attr.name, attr.value);
+							if (attr.name !== "component") { newEl.setAttribute(attr.name, attr.value); }
 						}
 
 						// Заменяем старые элементы на новые
 						el.replaceWith(newEl);
 					}
-				});
-
+				},
+			);
 		}
 
 		this.postRender();
-
 	}
 
 	render(): string {
@@ -144,7 +138,7 @@ export default class Component {
 	}
 
 	postRender() {
-		return "Abstract Component";
+
 	}
 
 	getContent(): HTMLElement {
@@ -166,12 +160,12 @@ export default class Component {
 
 				// Запускаем обновление компоненты
 				// Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
-				self.eventBus().emit(Component.EVENTS.FLOW_CDU, {...target}, target);
+				self.eventBus().emit(Component.EVENTS.FLOW_CDU, { ...target }, target);
 				return true;
 			},
 			deleteProperty() {
 				throw new Error("Нет доступа");
-			}
+			},
 		});
 	}
 

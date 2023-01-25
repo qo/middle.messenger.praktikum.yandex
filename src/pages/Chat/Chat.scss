@@ -8,11 +8,11 @@
 
 .chat__left {
   background: variables.$light-grey;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   padding: 10px;
   width: 17%;
-  display: flex;
-  flex-direction: column;
 }
 
 .chat__left__toolbar__profile_link > a {
@@ -75,19 +75,19 @@
 }
 
 .chat__right__chosen_chat__actions {
-  font-size: 20px;
-  font-weight: 700;
-  margin-left: auto;
   display: flex;
   flex-direction: row;
+  font-size: 20px;
+  font-weight: 700;
   gap: 5px;
+  margin-left: auto;
 }
 
 .chat__right__chosen_chat__actions > * {
-  color: variables.$white;
   border-radius: 32px;
-  padding: 10px;
+  color: variables.$white;
   font-weight: 500;
+  padding: 10px;
 }
 
 .chat__right__chosen_chat__actions__add_users {
@@ -124,12 +124,12 @@
 }
 
 .chat__right__message_toolbar__message_input {
+  align-content: center;
   background-color: variables.$mid-grey;
   border-radius: 30px;
+  display: flex;
   flex: 1;
   height: 32px;
-  display: flex;
-  align-content: center;
   padding-left: 10px;
 }
 
@@ -159,9 +159,12 @@
 }
 
 .chat__left__toolbar__searchbar {
+  align-items: center;
   background: variables.$mid-grey;
   border-radius: 5px;
+  display: flex;
   height: 32px;
+  justify-content: center;
   width: 100%;
 }
 
@@ -173,12 +176,12 @@
 }
 
 .chat__left__create_chat {
+  align-items: center;
   background-color: variables.$blue;
-  color: variables.$white;
   border-radius: 100%;
-  width: 20px;
+  color: variables.$white;
   height: 20px;
   justify-content: center;
-  align-items: center;
   margin-top: auto;
+  width: 20px;
 }

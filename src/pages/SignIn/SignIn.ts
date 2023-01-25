@@ -6,31 +6,27 @@ import Link from "../../components/Link/Link";
 import Field from "../../components/Field/Field";
 import SignInTemplate from "./SignIn.template";
 import "./SignIn.scss";
-import replaceElementWithComponent from "../../utils/replaceElementWithComponent";
-import SignUp from "../SignUp/SignUp";
 import validate from "../../utils/validate";
 import AuthAPIController from "../../utils/controllers/auth-api-controller";
 import router from "../../index";
 import Store from "../../services/Store/Store";
 
 export default class SignIn extends Component {
-
 	constructor() {
-
 		const titleText = new Text({ text: "Вход" });
 		const loginField = new Field({ title: "Логин", type: "login" });
 		const passwordField = new Field({ title: "Пароль", type: "password" });
 		const submitButton = new Button({ text: "Авторизоваться", action: () => {} });
-		const signupLink = new Link({ action: () => router.go('/sign-up'), text: "Нет аккаунта?" });
+		const signupLink = new Link({ action: () => router.go("/sign-up"), text: "Нет аккаунта?" });
 
 		super("div", {
-			"children": {
-				"titleText": titleText,
-				"submitButton": submitButton,
-				"loginField": loginField,
-				"passwordField": passwordField,
-				"signUpLink": signupLink
-			}
+			children: {
+				titleText,
+				submitButton,
+				loginField,
+				passwordField,
+				signUpLink: signupLink,
+			},
 		});
 	}
 
@@ -39,7 +35,6 @@ export default class SignIn extends Component {
 	}
 
 	postRender() {
-
 		const form = this._element.querySelector("form");
 
 		if (form) {
@@ -47,30 +42,42 @@ export default class SignIn extends Component {
 				e.preventDefault();
 
 				const inputs = Array.from(form.querySelectorAll("input"));
-				const isValid = inputs.every(
-					// @ts-ignore
-					input => validate(input.type, input.value)
+
+				inputs.forEach(
+					(input) => input.classList.remove("hasError"),
 				);
 
-				if (true) {
+				const invalidInputs = inputs.filter(
+					// @ts-ignore
+					(input) => !validate(input.getAttribute("type"), input.value),
+				);
+
+				if (!invalidInputs.length) {
+					invalidInputs.forEach(
+						(input) => input.classList.remove("hasError"),
+					);
+
 					const formData = {
-						"login": inputs[0].value,
-						"password": inputs[1].value
+						login: inputs[0].value,
+						password: inputs[1].value,
 					};
+
 					const controller = new AuthAPIController();
 					controller.signIn(formData)
-						.then(res => {
+						.then((res) => {
 							// @ts-ignore
-							if (res === 'OK')
+							if (res === "OK") {
 								Store.init().then(() => {
-									router.go('/messenger')
+									router.go("/messenger");
 								});
-						})
+							}
+						});
+				} else {
+					invalidInputs.forEach(
+						(input) => input.classList.add("hasError"),
+					);
 				}
-				else
-					console.log("Форма заполнена неправильно");
 			});
 		}
 	}
-
 }

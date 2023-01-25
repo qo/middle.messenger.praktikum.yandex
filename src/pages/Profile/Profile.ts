@@ -13,33 +13,29 @@ import IUser from "../../services/Store/store-interfaces/IUser";
 import UserRequest from "../../utils/api-interfaces/users/change-profile";
 import UserAPIController from "../../utils/controllers/user-api-controller";
 import PasswordRequest from "../../utils/api-interfaces/users/change-profile-password";
-import Button from "../../components/Button/Button";
 
 export default class Profile extends Component {
-
 	constructor() {
-
 		const user = Store.getState().user as IUser;
 
 		const goBack = new GoBack({});
-		const profileTitle = new Text({text: user.first_name});
+		const profileTitle = new Text({ text: user.first_name });
 
-		const email = new ProfileDataEntry({title: "Почта", type: "email", placeholder: user.email});
-		const login = new ProfileDataEntry({title: "Логин", type: "login", placeholder: user.login});
-		const firstName = new ProfileDataEntry({title: "Имя", type: "name", placeholder: user.first_name});
-		const lastName = new ProfileDataEntry({title: "Фамилия", type: "name", placeholder: user.second_name});
-		const userName = new ProfileDataEntry({title: "Имя в чате", type: "text", placeholder: user.display_name});
-		const phoneNumber = new ProfileDataEntry({title: "Телефон", type: "tel", placeholder: user.phone});
-		const oldPassword = new ProfileDataEntry({title: "Старый пароль", type: "password", placeholder: "Скрыто"});
-		const newPassword = new ProfileDataEntry({title: "Новый пароль", type: "password", placeholder: "Пусто"});
+		const email = new ProfileDataEntry({ title: "Почта", type: "email", placeholder: user.email });
+		const login = new ProfileDataEntry({ title: "Логин", type: "login", placeholder: user.login });
+		const firstName = new ProfileDataEntry({ title: "Имя", type: "name", placeholder: user.first_name });
+		const lastName = new ProfileDataEntry({ title: "Фамилия", type: "name", placeholder: user.second_name });
+		const userName = new ProfileDataEntry({ title: "Имя в чате", type: "text", placeholder: user.display_name });
+		const phoneNumber = new ProfileDataEntry({ title: "Телефон", type: "tel", placeholder: user.phone });
+		const oldPassword = new ProfileDataEntry({ title: "Старый пароль", type: "password", placeholder: "Скрыто" });
+		const newPassword = new ProfileDataEntry({ title: "Новый пароль", type: "password", placeholder: "Пусто" });
 
 		const updateUserDataAction = new ProfileActionsEntry({
 			text: "Изменить данные",
 			action: () => {
+				const inputs = this._element.querySelectorAll("input");
 
-				const inputs = this._element.querySelectorAll('input');
-
-				let userData: UserRequest = {
+				const userData: UserRequest = {
 					email: inputs[0].value || inputs[0].placeholder,
 					login: inputs[1].value || inputs[1].placeholder,
 					first_name: inputs[2].value || inputs[2].placeholder,
@@ -49,13 +45,13 @@ export default class Profile extends Component {
 				};
 
 				new UserAPIController().changeProfile(userData)
-					.then(() => Store.set('user', userData))
+					.then(() => Store.set("user", userData))
 					.then(() => {
 						inputs.forEach(
-							input => {
+							(input) => {
 								input.value = "";
-							}
-						)
+							},
+						);
 					})
 					.then(() => {
 						const updatedUser = Store.getState().user as IUser;
@@ -68,67 +64,67 @@ export default class Profile extends Component {
 						const profileTitleComponent = this._element.querySelector(".profile__title") as HTMLElement;
 						const profileTitle = profileTitleComponent.querySelector(".text") as HTMLElement;
 						profileTitle.innerText = updatedUser.first_name;
-					})
+					});
 
-				let passwordData: PasswordRequest = {
+				const passwordData: PasswordRequest = {
 					oldPassword: inputs[6].value,
-					newPassword: inputs[7].value
-				}
+					newPassword: inputs[7].value,
+				};
 
-				if (passwordData.oldPassword && passwordData.newPassword)
+				if (passwordData.oldPassword && passwordData.newPassword) {
 					new UserAPIController().changePassword(passwordData)
 						.then(() => {
 							inputs.forEach(
-								input => {
+								(input) => {
 									input.value = "";
-								}
-							)
+								},
+							);
 						})
 						.then(() => {
 							inputs[6].value = "Скрыто";
 							inputs[7].value = "Обновлен";
 						});
+				}
 			},
-			color: "blue"
+			color: "blue",
 		});
 		const logOutAction = new ProfileActionsEntry({
 			text: "Выйти",
 			action: () => {
 				const controller = new AuthAPIController();
 				controller.logOut()
-					.then(res => {
+					.then((res) => {
 						// @ts-ignore
-						if (res === 'OK')
-							router.go('/sign-in');
+						if (res === "OK") { router.go("/sign-in"); }
 					});
 			},
-			color: "red"
+			color: "red",
 		});
 
 		const changeAvatarAction = new ProfileActionsEntry({
 			text: "Поменять аватар",
-			action: () => router.go('/change-avatar'),
-			color: "blue"
+			action: () => router.go("/change-avatar"),
+			color: "blue",
 		});
 
 		super("div", {
-			"children": {
-				"goBack": goBack,
-				"profileTitle": profileTitle,
+			children: {
+				goBack,
+				profileTitle,
 
-				"email": email,
-				"login": login,
-				"firstName": firstName,
-				"lastName": lastName,
-				"userName": userName,
-				"phoneNumber": phoneNumber,
-				"oldPassword": oldPassword,
-				"newPassword": newPassword,
+				email,
+				login,
+				firstName,
+				lastName,
+				userName,
+				phoneNumber,
+				oldPassword,
+				newPassword,
 
-				"updateUserDataAction": updateUserDataAction,
-				"changeAvatarAction": changeAvatarAction,
-				"logOutAction": logOutAction
-			}
+				updateUserDataAction,
+				changeAvatarAction,
+				logOutAction,
+			},
 		});
 	}
 
@@ -137,28 +133,27 @@ export default class Profile extends Component {
 	}
 
 	postRender() {
-
 		const user = Store.getState().user as IUser;
 
 		const profileAvatar = (
-			this.getContent().querySelector('.profile_avatar') as HTMLImageElement
+			this.getContent().querySelector(".profile_avatar") as HTMLImageElement
 		);
 
 		if (profileAvatar) profileAvatar.src = this.getAvatarUrl(user.avatar);
 
 		const form = (
 			this
-				.getContent()
-				.querySelector('form.change_avatar') as HTMLFormElement
+			  .getContent()
+			  .querySelector("form.change_avatar") as HTMLFormElement
 		);
 
 		if (form) {
-			form.addEventListener('submit', (e) => {
+			form.addEventListener("submit", (e) => {
 				e.preventDefault();
 				const formData = new FormData(form);
 
 				new UserAPIController().changeAvatar(formData).then(() => {
-					router.go('/profile');
+					router.go("/profile");
 				}).catch((e) => {
 					alert(e.reason);
 				});
@@ -170,7 +165,6 @@ export default class Profile extends Component {
 		if (url) {
 			return `https://ya-praktikum.tech/api/v2/resources${url}`;
 		}
-		return 'https://avatars.mds.yandex.net/i?id=2d9d96cf73506a0498ed3ae4f5d2da5f-4779391-images-thumbs&ref=rim&n=33&w=150&h=150';
+		return "https://avatars.mds.yandex.net/i?id=2d9d96cf73506a0498ed3ae4f5d2da5f-4779391-images-thumbs&ref=rim&n=33&w=150&h=150";
 	}
-
 }
