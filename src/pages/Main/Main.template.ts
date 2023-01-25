@@ -1,0 +1,19 @@
+export default `
+.index
+    .index__pages
+        h1.index__pages__title
+            p(component='title')
+        ul.index__pages__list
+            li.index__pages__list__item
+                a(component='chatLink').index__pages__list__item__link
+            li.index__pages__list__item
+                a(component='error404Link').index__pages__list__item__link
+            li.index__pages__list__item
+                a(component='error505Link').index__pages__list__item__link
+            li.index__pages__list__item
+                a(component='profileLink').index__pages__list__item__link
+            li.index__pages__list__item
+                a(component='signinLink').index__pages__list__item__link
+            li.index__pages__list__item
+                a(component='signupLink').index__pages__list__item__link
+`;
