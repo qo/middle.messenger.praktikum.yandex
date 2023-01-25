@@ -9,10 +9,17 @@ import "./SignUp.scss";
 import replaceElementWithComponent from "../../utils/replaceElementWithComponent";
 import SignIn from "../SignIn/SignIn";
 import validate from "../../utils/validate";
+import AuthAPIController from "../../utils/controllers/auth-api-controller";
+import router from "../../index";
+import Store from "../../services/Store/Store";
 
 export default class SignUp extends Component {
 
 	constructor() {
+
+		// Если пользователь уже вошел, кидаем его в мессенджер
+		if ("id" in Store.getState().user)
+			router.go('/messenger');
 
 		const titleText = new Text({ text: "Регистрация" });
 		const emailField = new Field({ title: "Почта", type: "email" });
@@ -23,7 +30,7 @@ export default class SignUp extends Component {
 		const passwordField = new Field({ title: "Пароль", type: "password"});
 		const passwordConfirmField = new Field({ title: "Пароль (еще раз)", type: "password" });
 		const submitButton = new Button({ text: "Зарегистрироваться", action: () => {} });
-		const signinLink = new Link({ action: () => replaceElementWithComponent("#root", new SignIn()), text: "Есть аккаунт?" });
+		const signinLink = new Link({ action: () => router.go('/'), text: "Есть аккаунт?" });
 
 		super("div", {
 			"children": {
@@ -54,21 +61,32 @@ export default class SignUp extends Component {
 				e.preventDefault();
 
 				const inputs = Array.from(form.querySelectorAll("input"));
-				inputs.forEach(
-					input => console.log(input.value)
-				);
 				const isValid = inputs.every(
 					// @ts-ignore
 					input => validate(input.type, input.value)
 				);
 
-				if (isValid)
-					replaceElementWithComponent("#root", new SignIn());
+				if (true) {
+					const formData = {
+						"first_name": inputs[2].value,
+						"second_name": inputs[3].value,
+						"login": inputs[1].value,
+						"email": inputs[0].value,
+						"password": inputs[5].value,
+						"phone": inputs[4].value
+					};
+					const controller = new AuthAPIController();
+					controller.signUp(formData)
+						.then(data => {
+							console.log(data);
+							// @ts-ignore
+							if (data.status === 200)
+								router.go('/messenger');
+						});
+				}
 				else
 					console.log("Форма заполнена неправильно");
-			});
+			})
 		}
-
 	}
-
 }

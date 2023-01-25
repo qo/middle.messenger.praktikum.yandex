@@ -1,12 +1,12 @@
 import "./EventBus";
 import EventBus from "./EventBus";
 
-interface ComponentProps {
+export interface ComponentProps {
 	[key: string]: any;
 	children?: Record<string, Component>
 }
 
-export default abstract class Component {
+export default class Component {
 	static EVENTS = {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
@@ -95,18 +95,12 @@ export default abstract class Component {
 
 	_render() {
 
-		// let renderedElement = null;
-		// if (this._element) {
-		// 	const nodeId = this._element.getAttribute("id");
-		//
-		// 	if (nodeId) {
-		// 		renderedElement = document.getElementById(nodeId);
-		// 	}
-		// }
-
 		const html = this.render();
-		const divElement = document.createElement("div");
-		divElement.innerHTML = html.trim();
+
+		if (!this._element.innerHTML) {
+			this._element.innerHTML = html.trim();
+			this._element = this._element.firstElementChild as HTMLElement;
+		}
 
 		// Если есть children
 		if (this.props.children) {
@@ -115,7 +109,7 @@ export default abstract class Component {
 			// и если в props.children есть компонент с таким именем,
 			// заменяем его на содержимое этого компонента
 
-			divElement.querySelectorAll("[component]").forEach(
+			this._element.querySelectorAll("[component]").forEach(
 				(el) => {
 
 					// Имя компонента и те аттрибуты, что присутствуют до замены
@@ -141,25 +135,19 @@ export default abstract class Component {
 
 		}
 
-		this._element = <HTMLElement>divElement.firstChild;
-
-		// if (this.props.className) {
-		// 	this._element.setAttribute("class", this.props.className);
-		// }
-		//
-		// if (renderedElement) {
-		// 	renderedElement.replaceWith(this._element);
-		// }
-
 		this.postRender();
 
 	}
 
-	abstract render(): string;
+	render(): string {
+		return "Abstract Component";
+	}
 
-	postRender() {}
+	postRender() {
+		return "Abstract Component";
+	}
 
-	getContent() {
+	getContent(): HTMLElement {
 		return this.element;
 	}
 
@@ -187,13 +175,13 @@ export default abstract class Component {
 		});
 	}
 
-	_createDocumentElement(tagName: string) {
+	_createDocumentElement(tagName: string): HTMLElement {
 		// Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
 		return document.createElement(tagName);
 	}
 
 	show() {
-		this.getContent().style.display = "block";
+		this.getContent().style.display = "flex";
 	}
 
 	hide() {

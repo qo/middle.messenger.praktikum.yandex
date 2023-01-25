@@ -1,0 +1,49 @@
+@use '../../variables';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+.form_window {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  gap: 20px;
+  font-family: Inter, sans-serif;
+  border-radius: 12px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+}
+
+.form_window__title {
+  font-size: 20px;
+}
+
+.form_window__inputs {
+}
+
+.form_window__buttons {
+  width: 100%;
+  color: variables.$white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.form_window__buttons > * {
+  width: 120px;
+  height: 37px;
+  color: variables.$white;
+  border-radius: 8px;
+}
+
+.form_window__buttons__confirm {
+  background-color: variables.$blue;
+}
+
+.form_window__buttons__cancel {
+  background-color: variables.$red;
+}

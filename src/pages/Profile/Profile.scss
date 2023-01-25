@@ -16,11 +16,15 @@
   width: 510px;
 }
 
-.profile__pfp {
-  background-color: variables.$mid-grey;
-  border-radius: 100%;
-  height: 130px;
+.profile_avatar__wrapper {
   width: 130px;
+  height: 130px;
+}
+
+.profile_avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
 }
 
 .profile__data, .profile__actions {
