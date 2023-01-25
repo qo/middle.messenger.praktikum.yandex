@@ -11,10 +11,15 @@ import SignIn from "../SignIn/SignIn";
 import validate from "../../utils/validate";
 import AuthAPIController from "../../utils/controllers/auth-api-controller";
 import router from "../../index";
+import Store from "../../services/Store/Store";
 
 export default class SignUp extends Component {
 
 	constructor() {
+
+		// Если пользователь уже вошел, кидаем его в мессенджер
+		if ("id" in Store.getState().user)
+			router.go('/messenger');
 
 		const titleText = new Text({ text: "Регистрация" });
 		const emailField = new Field({ title: "Почта", type: "email" });
@@ -25,7 +30,7 @@ export default class SignUp extends Component {
 		const passwordField = new Field({ title: "Пароль", type: "password"});
 		const passwordConfirmField = new Field({ title: "Пароль (еще раз)", type: "password" });
 		const submitButton = new Button({ text: "Зарегистрироваться", action: () => {} });
-		const signinLink = new Link({ action: () => replaceElementWithComponent("#root", new SignIn()), text: "Есть аккаунт?" });
+		const signinLink = new Link({ action: () => router.go('/'), text: "Есть аккаунт?" });
 
 		super("div", {
 			"children": {
@@ -61,7 +66,7 @@ export default class SignUp extends Component {
 					input => validate(input.type, input.value)
 				);
 
-				if (isValid) {
+				if (true) {
 					const formData = {
 						"first_name": inputs[2].value,
 						"second_name": inputs[3].value,
@@ -76,7 +81,7 @@ export default class SignUp extends Component {
 							console.log(data);
 							// @ts-ignore
 							if (data.status === 200)
-								router.go('/sign-in');
+								router.go('/messenger');
 						});
 				}
 				else

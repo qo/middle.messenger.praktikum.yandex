@@ -97,8 +97,10 @@ export default class Component {
 
 		const html = this.render();
 
-		if (!this._element.innerHTML)
+		if (!this._element.innerHTML) {
 			this._element.innerHTML = html.trim();
+			this._element = this._element.firstElementChild as HTMLElement;
+		}
 
 		// Если есть children
 		if (this.props.children) {
@@ -133,8 +135,6 @@ export default class Component {
 
 		}
 
-		this._element = <HTMLElement>this._element.firstChild;
-
 		this.postRender();
 
 	}
@@ -143,7 +143,9 @@ export default class Component {
 		return "Abstract Component";
 	}
 
-	postRender() {}
+	postRender() {
+		return "Abstract Component";
+	}
 
 	getContent(): HTMLElement {
 		return this.element;
@@ -179,7 +181,7 @@ export default class Component {
 	}
 
 	show() {
-		this.getContent().style.display = "block";
+		this.getContent().style.display = "flex";
 	}
 
 	hide() {

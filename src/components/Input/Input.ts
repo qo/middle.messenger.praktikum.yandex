@@ -24,20 +24,20 @@ export default class Input extends Component {
 
 	postRender() {
 
-		this._element.addEventListener(
-			"change",
-			() => {
-				// @ts-ignore
-				if (!validate(this.props.type, this._element.value)) {
-					this._element.focus();
-					this._element.classList.add("hasError");
-				}
-				else {
-					this._element.blur();
-					this._element.classList.remove("hasError");
-				}
-			}
-		);
+		// this._element.addEventListener(
+		// 	"change",
+		// 	() => {
+		// 		// @ts-ignore
+		// 		if (!validate(this.props.type, this._element.value || "")) {
+		// 			this._element.focus();
+		// 			this._element.classList.add("hasError");
+		// 		}
+		// 		else {
+		// 			this._element.blur();
+		// 			this._element.classList.remove("hasError");
+		// 		}
+		// 	}
+		// );
 
 	}
 }

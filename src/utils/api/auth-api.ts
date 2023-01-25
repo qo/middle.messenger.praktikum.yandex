@@ -1,6 +1,7 @@
 import HTTP from "../http";
 import {SignInRequest} from "../api-interfaces/auth/signin";
 import {SignUpRequest} from "../api-interfaces/auth/signup";
+import IUser from "../../services/Store/store-interfaces/IUser";
 
 const authAPIInstance = new HTTP('https://ya-praktikum.tech/api/v2/auth');
 
@@ -21,7 +22,7 @@ export default class AuthAPI {
             }
         );
     }
-    public getUser(): Promise<unknown> {
+    public getUser(): Promise<string> {
         return authAPIInstance.get(
             '/user'
         );

@@ -11,6 +11,7 @@ import SignUp from "../SignUp/SignUp";
 import validate from "../../utils/validate";
 import AuthAPIController from "../../utils/controllers/auth-api-controller";
 import router from "../../index";
+import Store from "../../services/Store/Store";
 
 export default class SignIn extends Component {
 
@@ -20,7 +21,7 @@ export default class SignIn extends Component {
 		const loginField = new Field({ title: "Логин", type: "login" });
 		const passwordField = new Field({ title: "Пароль", type: "password" });
 		const submitButton = new Button({ text: "Авторизоваться", action: () => {} });
-		const signupLink = new Link({ action: () => replaceElementWithComponent("#root", new SignUp()), text: "Нет аккаунта?" });
+		const signupLink = new Link({ action: () => router.go('/sign-up'), text: "Нет аккаунта?" });
 
 		super("div", {
 			"children": {
@@ -51,7 +52,7 @@ export default class SignIn extends Component {
 					input => validate(input.type, input.value)
 				);
 
-				if (isValid) {
+				if (true) {
 					const formData = {
 						"login": inputs[0].value,
 						"password": inputs[1].value
@@ -61,7 +62,9 @@ export default class SignIn extends Component {
 						.then(res => {
 							// @ts-ignore
 							if (res === 'OK')
-								router.go('/chat');
+								Store.init().then(() => {
+									router.go('/messenger')
+								});
 						})
 				}
 				else

@@ -21,4 +21,13 @@ export default class ChatPreview extends Component {
 	render() {
 		return compile(ChatPreviewTemplate)(this.props);
 	}
+
+	postRender() {
+		// Если количество новых сообщений равно нулю, скрываем элемент,
+		// показывающий количество новых сообщений
+		if (!this.props.msgAmt) {
+			const msgAmt = this._element.querySelector('.chat_preview__right__msg_amt') as HTMLElement;
+			msgAmt.style.display = "none";
+		}
+	}
 }

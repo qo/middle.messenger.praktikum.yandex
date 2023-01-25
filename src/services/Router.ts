@@ -40,10 +40,8 @@ class Route {
     render() {
         if (!this._block) {
             this._block = new this._blockClass();
-            replaceElementWithComponent(this._props.rootQuery, this._block);
-            return;
         }
-
+        replaceElementWithComponent(this._props.rootQuery, this._block);
         this._block.show();
     }
 }

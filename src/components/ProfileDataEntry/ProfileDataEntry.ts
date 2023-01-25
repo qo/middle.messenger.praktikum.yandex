@@ -11,7 +11,7 @@ export default class ProfileDataEntry extends Component {
 	constructor(props: ProfileDataEntryProps) {
 
 		const dataTitle = new Text({ text: props.title });
-		const dataValue = new Input({ type: props.type, placeholder: props.placeholder });
+		const dataValue = new Input({ type: props.type, placeholder: props.placeholder || "Не указано" });
 		const delimiter = new Delimiter({ direction: "horizontal" });
 
 		super("div", { ...props, children: { "dataTitle": dataTitle, "dataValue": dataValue, "delimiter": delimiter }});

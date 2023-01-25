@@ -10,6 +10,7 @@ export default `
         .chat__left__chat_previews
             div(component='chatPreviewAndrey')
             div(component='chatPreviewAlexandr')
+        button(component='createChat').chat__left__create_chat
     div(component='verticalDelimiter')
     .chat__right
         .chat__right__chosen_chat
@@ -17,7 +18,9 @@ export default `
             .chat__right__chosen_chat__name
                 p(component='chosenChatName')
             .chat__right__chosen_chat__actions
-                button(component='chosenChatActions')
+                button(component='addUsersButton').chat__right__chosen_chat__actions__add_users
+                button(component='removeUsersButton').chat__right__chosen_chat__actions__remove_users
+                button(component='deleteChatButton').chat__right__chosen_chat__actions__delete_chat
         div(component='horizontalDelimiter')
         .chat__right__messages__date
             p(component='messagesDate')
@@ -34,4 +37,7 @@ export default `
                 div(component='messageInput')
             .chat__right__message_toolbar__button-send
                 button(component='sendButton')
+    .form_window(component="addUsersFormWindow" style="display: none")
+    .form_window(component="removeUsersFormWindow" style="display: none")
+    .form_window(component="deleteChatFormWindow" style="display: none")
 `;

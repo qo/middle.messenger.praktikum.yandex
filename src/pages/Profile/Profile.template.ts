@@ -3,6 +3,7 @@ export default `
     div(component='goBack')
     .profile
         .profile__pfp
+            button(component='profileAvatar')
         h1.profile__title
             p(component='profileTitle')
         .profile__data
@@ -12,8 +13,9 @@ export default `
             div(component='lastName')
             div(component='userName')
             div(component='phoneNumber')
+            div(component='oldPassword')
+            div(component='newPassword')
         .profile__actions
-            div(component='changeDataAction')
-            div(component='changePasswordAction')
+            div(component='updateUserDataAction')
             div(component='logOutAction')
 `;

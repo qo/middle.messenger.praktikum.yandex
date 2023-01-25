@@ -5,6 +5,7 @@ export default function connect(ComponentClass: typeof Component) {
 
     class ConnectedComponent extends ComponentClass {
         constructor(props: any) {
+
             // не забываем передать все аргументы конструктора
             super(props);
 
