@@ -2,39 +2,36 @@ type Indexed<T = unknown> = {
     [key in string]: T;
 };
 
-function getValuesFromTo(from: Indexed, to: Indexed): void {
-    for (const property in from) {
-        if (!(property in to))
-            to[property] = from[property];
-        else
-            // @ts-ignore
-            getValuesFromTo(from[property], to[property]);
-    }
-}
-
 function merge(lhs: Indexed, rhs: Indexed): Indexed {
-    const res = lhs;
-    getValuesFromTo(rhs, res);
-    return res;
-}
-
-function last(arr: string[]) {
-    return arr[arr.length-1];
-}
-
-function getObjByPath(path: string, value: unknown) {
-    const fields = path.split('.');
-    let obj = { [last(fields)]: value };
-    for (let i = fields.length - 2; i >= 0; i--) {
-        obj = { [fields[i]]: obj };
+    for (const p in rhs) {
+        if (!rhs.hasOwnProperty(p)) {
+            continue;
+        }
+        try {
+            // @ts-ignore
+            if (rhs[p].constructor === Object) {
+                rhs[p] = merge(lhs[p] as Indexed, rhs[p] as Indexed);
+            } else {
+                lhs[p] = rhs[p];
+            }
+        } catch (e) {
+            lhs[p] = rhs[p];
+        }
     }
-    return obj;
+
+    return lhs;
 }
 
-function set(obj: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
-    if (typeof obj !== 'object') return obj;
-    const objByPath = getObjByPath(path, value);
-    return merge(obj as Indexed, objByPath);
-}
+export default function set(object: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
+    if (typeof object !== 'object' || object === null) {
+        return object;
+    }
+    const result = path.split('.').reduceRight<Indexed>(
+        (acc, key) => ({
+            [key]: acc,
+        }),
+        value as any,
+    );
 
-export default set;
+    return merge(object as Indexed, result);
+}
